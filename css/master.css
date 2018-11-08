@@ -1,0 +1,402 @@
+/*
+  fonts
+  - font is VCR, formatted to truetype
+*/
+@font-face {
+  font-family: "VCR";
+  src: url("../assets/VCR_OSD_MONO_1.001.ttf") format("truetype");
+}
+
+@media screen and (min-width: 0px) {
+
+  /*
+  non-classes or non id
+  *
+  - box sizing is border box to include padding and border
+  - font is set to VCR, with a light gray color
+  - img set to 100% because it needs to fill in the entire width of te container
+  */
+
+  * {
+    box-sizing: border-box;
+    font-family: "VCR";
+    color: #707070;
+  }
+
+  body {
+    padding: 1.875em 1em 1em 1em;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 20px;
+    font-weight: normal;
+  }
+
+  h2 {
+    font-size: 14px;
+  }
+
+  h3 {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: normal;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #707070;
+  }
+
+  h4 {
+    font-size: 10px;
+    font-weight: normal;
+  }
+
+  a {
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  a:hover {
+    cursor: pointer;
+  }
+
+  input {
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: 15px;
+    background-position: 0.8em .8em;
+    padding: 1em 1em 1em 3em;
+    margin: 1em 0 1em 0;
+    border: none;
+    border-bottom: 1px solid #BFBFBF;
+  }
+
+  input:focus {
+    outline: none;
+    border-bottom: 2px solid gray;
+  }
+
+  /*
+    container classes
+  */
+  .nav-grid-container {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 30% auto 30%;
+    grid-auto-flow: row;
+  }
+
+  .main-grid-container {
+    display: grid;
+    grid-template:
+      [row1-start] "navigation" [row1-end]
+      [row2-start] "hero-banner" [row2-end]
+      [row3-start] "coming-up-flex" [row3-end];
+    grid-row-gap: 5em;
+  }
+
+  .coming-up-flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .user-entry-flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 90vh;
+  }
+
+  .user-entry-grid-container {
+    display: grid;
+    grid-template:
+      [row1-start] "back" [row1-end]
+      [row2-start] "form" 75vh [row2-end]
+      [row3-start] "other" [row3-end];
+  }
+
+
+  .two-row-grid-container {
+    display: grid;
+    margin: 4em auto auto auto;
+    grid-template:
+      [row2-start] "form" [row2-end]
+      [row3-start] "other" [row3-end];
+  }
+
+  .search-grid-container {
+    max-width: 500px;
+  }
+
+  .sneaker-grid-container {
+    max-width: 768px;
+  }
+
+  .search-entry-grid-container {
+    display: grid;
+    grid-template-columns: 10% 90%;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "search-button search-field";
+  }
+
+  .search-results-grid-container {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 45% 45%;
+    justify-content: space-between;
+  }
+
+  .flex-container {
+    display: flex;
+  }
+
+  /*
+    navigation
+  */
+  .main-nav {
+    grid-area: navigation;
+  }
+
+  .main-nav ul {
+    text-align: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+  }
+
+  .nav-item-a {
+    justify-self: start;
+  }
+
+  .nav-item-c {
+    justify-self: end;
+  }
+
+
+  /*
+    hero banner
+  */
+  .hero-banner {
+    grid-area: hero-banner;
+    align-self: center;
+  }
+
+  .hero-banner-img {
+    width: 100%;
+  }
+
+  .hero-banner-date {
+    font-size: 20px;
+  }
+
+
+  /*
+    search results container
+  */
+  .shoe-date-container {
+    width: 100%;
+  }
+
+  .shoe-date-container h1 {
+    font-weight: normal;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .shoe-date-container h3 {
+    font-size: 10px
+  }
+
+  /*
+  forms
+  - sign in will by default show first, hence register is set to hidden
+  */
+  input[name="username-sign-in"], input[name="username-register"] {
+    background-image: url('../assets/icons/man-user.png');
+  }
+
+  input[name="password-sign-in"], input[name="password-register"], input[name="password-confirm-register"]  {
+    background-image: url('../assets/icons/locked-padlock.png');
+  }
+
+  input[name="email-register"] {
+    background-image: url('../assets/icons/mail-black-envelope-symbol.png');
+  }
+
+  input[type="submit"] {
+    padding: 1em;
+    border: none;
+  }
+
+  .register {
+    display: none;
+  }
+
+  .back {
+    display: inline-block;
+    grid-area: back;
+  }
+
+  .img-button {
+    width: 10px;
+    height: 10px;
+  }
+
+  .error-msg {
+    grid-column: 1 / 3;
+  }
+
+  .close-search-brands {
+    margin-top: 1.38em;
+  }
+
+  .search-by-brand-control {
+    justify-content: space-between;
+  }
+
+  .entry-form {
+    grid-area: form;
+    align-self: center;
+  }
+
+  .entry-form h1 {
+    font-size: 14px;
+  }
+
+  .change-entry-mode {
+    text-align: center;
+  }
+
+  .log-in-redirect {
+    display: none;
+  }
+
+  .error {
+    color: red;
+    font-size: 10px;
+    font-weight: lighter;
+  }
+
+  /*
+    search forms
+  */
+  input[name="search-submit"] {
+    background-image: url('../assets/icons/musica-searcher.png');
+    background-color: white;
+    border: none;
+  }
+
+  input[name="search-input"] {
+    padding: 1em;
+    border: none;
+  }
+
+  .search-recommendations {
+    margin-top: 2em;
+  }
+
+  .search-recommendations a {
+    margin: 0.5em 0 0.5em 0;
+  }
+
+  .search-brands {
+    flex-direction: column;
+  }
+
+  /*
+  sneaker page
+  */
+  .sneaker-title-colorway {
+    margin-top: 2em;
+  }
+
+  .sneaker-title-colorway h1, .sneaker-title-colorway h3 {
+    margin: 0.2em 0 0.2em 0;
+  }
+
+  .img-carousel {
+    display: flex;
+    justify-content: space-between;
+    margin: 2em 0 2em 0;
+    width: 100%;
+  }
+
+  .img-carousel img {
+    cursor: pointer;
+    width: 18%;
+    height: 100%;
+  }
+
+  .img-carousel-unfocused {
+    filter: grayscale(100%);
+  }
+
+  .snkr-desc {
+    color: #B2B2B2;
+    font-weight: lighter;
+    line-height: 20px;
+  }
+
+  .shoe-name-favorite-btn h1 {
+    display: inline-block;
+  }
+
+  .shoe-name-favorite-btn img {
+    width: 15px;
+    height: 15px;
+  }
+
+  .shoe-name-favorite-btn {
+    flex-direction: row;
+  }
+
+}
+
+@media screen and (min-width: 500px) {
+  .search-results-grid-container {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 30% 30% 30%;
+    justify-content: space-between;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .main-grid-container {
+    max-width: 768px;
+    margin: auto;
+  }
+
+}
+
+@media screen and (min-width: 1024px) {
+
+  .nav-grid-container {
+    display: grid;
+    justify-items: end;
+    width: 100%;
+    grid-template-columns: auto 10% 10% 10%;
+    grid-template-areas:
+      ". nav1 nav2 nav3";
+
+
+  }
+
+  .nav-item-a {
+    grid-area: nav2;
+    justify-self: end;
+  }
+
+  .nav-item-b {
+    grid-area: nav1;
+  }
+
+  .nav-item-c {
+    grid-area: nav3;
+  }
+}
