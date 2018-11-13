@@ -87,7 +87,15 @@ $(document).ready(function() {
 
       } else {
         alert("Success!");
-        window.location.replace('index.php');
+        // window.location.replace('index.php');
+        $.ajax({
+          type: 'GET',
+          url: './data-processing/redirect-page.php',
+          dataType: 'json',
+          encode: true
+        }).done(function(data, status) {
+          window.location.replace(data);
+        });
       }
     }).fail(function(data){
       console.log('fail');
@@ -98,7 +106,7 @@ $(document).ready(function() {
   });
 
   $('.search').submit(function(event) {
-    event.preventDefault();
+    //event.preventDefault();
     var data = {
       'search-input': $('input[name=search-input]').val()
     }
@@ -140,20 +148,18 @@ $(document).ready(function() {
     });
   })
 
+  //add or delete shoe favorite to user preferences
   $('.btn-set-favorite').click(function() {
     var sneakerInfo = {
       sneakerId: $(".snkr-id").text(),
       sneakerName: $(".snkr-name").text()
     }
 
-    // $.post("sneaker.php", sneakerInfo);
     $.ajax({
       type: 'post',
       url: './data-processing/favorite.php',
       data: sneakerInfo
-    }).done(function(data, status) {
-      alert(data + status);
-    });
+    }).done(function(data, status) {});
   });
 
   //function to build search query

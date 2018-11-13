@@ -13,11 +13,13 @@
     <?php
       session_start();
     ?>
+
+    <!-- go back one page -->
+    <div class="">
+      <a class="back">BACK</a>
+    </div>
     <section class="user-entry-grid-container">
-      <!-- go back one page -->
-      <div class="">
-        <a class="back" href="index.php">BACK</a>
-      </div>
+
 
       <!-- log in form -->
       <form class="entry-form log-in" action="data-processing/sign-in.php" method="post">

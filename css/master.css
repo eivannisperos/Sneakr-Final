@@ -111,6 +111,8 @@
   }
 
   .user-entry-grid-container {
+    max-width: 500px;
+    margin: auto;
     display: grid;
     grid-template:
       [row1-start] "back" [row1-end]
@@ -239,7 +241,6 @@
 
   .back {
     display: inline-block;
-    grid-area: back;
   }
 
   .img-button {
@@ -269,6 +270,7 @@
   }
 
   .change-entry-mode {
+    grid-area: other;
     text-align: center;
   }
 

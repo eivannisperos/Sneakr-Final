@@ -1,9 +1,12 @@
 <!DOCTYPE html>
+<?php
+  session_start();
+?>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>shoe name here</title>
+    <title><?= $_GET["name"] ?></title>
     <link rel="stylesheet" href="css/master.css">
     <script src="js/jquery.js"></script>
     <script src="js/button-scripts.js"></script>
@@ -11,45 +14,71 @@
   </head>
   <body>
     <?php
-      session_start();
       include("data-processing/db-connect.php");
+
+      $favoriteShoe = false;
+      $userLoggedIn = false;
+      $redirectPossible = false;
+      $redirectLink = $_SERVER["REQUEST_URI"];
+      $_SESSION["redirect"] = $redirectLink;
       //$_GET name comes from url query: name
       //$_GET id comes from url query: id
       if (isset($_GET['name']) && isset($_GET['id'])) {
         $snkrName = $_GET['name'];
         $snkrId = $_GET['id'];
 
-        $query = "SELECT imgLink, colors, description from shoes WHERE itemID = '$snkrId'";
-        $result = mysqli_query($connection, $query);
-        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+        //run query
+        //queries
+        $retrieveShoeQuery = "SELECT imgLink, colors, description from shoes WHERE itemID = ?";
+        $result = $connection->prepare($retrieveShoeQuery);
+        $result->bind_param("s", $snkrId);
+        $result->execute();
+        $result->bind_result($imgLink, $colors, $description);
 
         //store retrieved data from MySQL to be passed down to DOM below
         //sanitize user input
-        $snkrDescription = cleanInput($row['description']);
-        $snkrImageLink = $row['imgLink'];
-        $snkrColor = $row['colors'];
+        while($result->fetch()) {
+          $snkrDescription = cleanInput($description);
+          $snkrImageLink = $imgLink;
+          $snkrColor = $colors;
+        }
       }
 
-      //favorite systsem:
-      /*
-      what we have thus far:
-      1. A way for the system to add "favorites" to mysql based on user logged in
+      //if the user is logged in
+      //check if the shoe has been favorited
+      if (isset($_SESSION['valid_user_id'])) {
+        //a user is logged in
+        $userLoggedIn = true;
+        //store valid user into this variable
+        $validUser = $_SESSION['valid_user_id'];
 
-      What we need:
-      1. The system should keep track of the user's favorited items
-      2. When the user clicks the favorite button when it is already favorited, it should remove that from the database
+        //[re[are query]]
+        $checkFavorite = "SELECT COUNT(itemID) FROM follows WHERE userid=? AND itemID=?";
+        $result = $connection->prepare($checkFavorite);
+        $result->bind_param("ss", $validUser, $snkrId);
+        $result->execute();
+        $result->bind_result($numRows);
+        while($result->fetch()) {
+          //if the count returns that the query exists...
+          //set variable $favoriteShoe to true
+          if ($numRows>0) {
+            $favoriteShoe = true;
+          }
+        }
+      } else {
+        $redirectPossible = true;
+      }
 
-      A1:
-      1. session checks for the shoe to be favorited, if it is then set button class to "favorited"
-      2. button's appearance should rely on the shoe being favorited
-
-      */
+      //close database
+      $result->close();
+      $connection->close();
 
       // function to concatenate root directory for image
       function buildImageLink($link, $imgIndex) {
         echo $link."/".$imgIndex.".jpg";
       }
 
+      //clean input
       function cleanInput($input) {
         $input = trim($input);
         $input = stripslashes($input);
@@ -58,11 +87,15 @@
       }
     ?>
 
-    <div class="back">
-      <a>BACK</a>
-    </div>
-
+    <nav class="main-nav">
+      <ul class="nav-grid-container">
+        <li class="nav-item-a"><a href="search.php">HOME</a></li>
+        <li class="nav-item-b back"><a href="index.php">BACK</a></li>
+        <li class="nav-item-c"><a href="user.php">USERS</a></li>
+      </ul>
+    </nav>
     <section class="two-row-grid-container sneaker-grid-container">
+
       <!-- the buildImageLink function returns the image path -->
       <img class="sneaker-main-img" src=<?= buildImageLink($snkrImageLink, 1); ?> alt="featured shoe">
 
@@ -86,9 +119,38 @@
 
   <script>
     $(document).ready(function() {
+      var isFavoriteShoe = <?= json_encode($favoriteShoe); ?>;
+      var userLoggedIn = <?= json_encode($userLoggedIn) ?>;
       //capitalize the paragrpahs
       var snkrDesc = "<?= $snkrDescription ?>";
       $(".snkr-desc").html(snkrDesc.toUpperCase());
+
+      //if the favorite button is clicked
+      $('.btn-set-favorite').click(function() {
+        if (userLoggedIn) {
+          if ($(this).hasClass("favorited")) {
+            $(this).removeClass("favorited");
+            $(this).find("img").attr("src", "assets/icons/bookmark-white.png");
+          } else {
+            $(this).addClass("favorited");
+            $(this).find("img").attr("src", "assets/icons/bookmark-black-shape.png");
+          }
+        } else {
+          $(".shoe-name-favorite-btn").append(warningMsg("YOU MUST BE LOGGED IN TO BOOKMARK.", "logged-in"));
+        }
+      })
+
+      //change based on data incoming from data
+      if (isFavoriteShoe) {
+        //if the shoe is favorited
+        //add favorited classes, change icon
+        $(".btn-set-favorite").addClass("favorited");
+        $(".btn-set-favorite").find("img").attr("src", "assets/icons/bookmark-black-shape.png");
+      } else {
+        //if the shoe is not
+        $(".btn-set-favorite").removeClass("favorited");
+        $(".btn-set-favorite").find("img").attr("src", "assets/icons/bookmark-white.png");
+      }
 
       //iterate through images
       //then build image sections
@@ -131,6 +193,25 @@
         });
 
         return carouselImg;
+      }
+
+      function warningMsg(msg, type) {
+        var src = "";
+        if (type==="logged-in") {
+          src = "user.php";
+        }
+
+        var srcRedirect = $("<a/>", {
+          href: src
+        })
+
+        var warningContainer = $("<span/>", {
+          class: "warning-msg"
+        });
+
+        warningContainer.html(msg);
+        srcRedirect.append(warningContainer);
+        return srcRedirect;
       }
   })
   </script>
