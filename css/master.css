@@ -120,7 +120,6 @@
       [row3-start] "other" [row3-end];
   }
 
-
   .two-row-grid-container {
     display: grid;
     margin: 4em auto auto auto;

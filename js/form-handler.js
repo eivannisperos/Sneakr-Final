@@ -105,8 +105,17 @@ $(document).ready(function() {
     //prevents click anchors to run to a new URL, which is their default behaviours
   });
 
+  // TODO: let the system add to the URL
+  /* start a new GitKraken Branch
+    1. let search page redirect to self
+    2. remove event.preventDefault so that the page reloads
+    3. have search-processing.php echo data instead to javascript
+    4. might have to remove the submit listener instead and replace it with AJAX call
+    5. have search-processing check for $_GET values (in the URL), so when it does exiest, transmit data
+  */
   $('.search').submit(function(event) {
-    //event.preventDefault();
+    event.preventDefault();
+    alert("submitted");
     var data = {
       'search-input': $('input[name=search-input]').val()
     }
