@@ -41,7 +41,9 @@
   unset($_SESSION["search-input"]);
   echo json_encode($data);
 
-  function assignMonthValue(month) {
-
-  }
+  // function assignMonthValue($month) {
+  //   switch($month) {
+  //     case "January"
+  //   }
+  // }
 ?>
