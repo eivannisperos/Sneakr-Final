@@ -19,9 +19,9 @@ $(document).ready(function() {
   });
 
   //go back one page
-  // $(".back").click(function() {
-  //   history.back(-1);
-  // });
+  $(".back").click(function() {
+    history.back(-1);
+  });
 
   //checks to see if a search input is focused
   $("input[name=search-input]").focus(function() {
