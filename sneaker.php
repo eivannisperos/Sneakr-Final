@@ -87,13 +87,9 @@
       }
     ?>
 
-    <nav class="main-nav">
-      <ul class="nav-grid-container">
-        <li class="nav-item-a"><a href="search.php">HOME</a></li>
-        <li class="nav-item-b back"><a href="index.php">BACK</a></li>
-        <li class="nav-item-c"><a href="user.php">USERS</a></li>
-      </ul>
-    </nav>
+    <div class="">
+      <a class="back">BACK</a>
+    </div>
     <section class="two-row-grid-container sneaker-grid-container">
 
       <!-- the buildImageLink function returns the image path -->

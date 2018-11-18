@@ -10,6 +10,15 @@
     <script src="js/form-handler.js"></script>
   </head>
   <body>
+    <?php
+      session_start();
+
+      //if the search request is submtted
+      if (isset($_GET["search-input"])) {
+        //search search query as a session global variable
+        $_SESSION["search-input"] = $_GET["search-input"];
+      }
+    ?>
     <div class="">
       <a class="back" href="index.php">BACK</a>
     </div>
