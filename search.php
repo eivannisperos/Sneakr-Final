@@ -25,7 +25,7 @@
     <section class="two-row-grid-container search-grid-container">
       <form class="search-entry-grid-container search" action="search.php" method="get">
         <input type="submit" name="search-submit" value="">
-        <input type="text" name="search-input" placeholder="SEARCH">
+        <input id="input-search" type="text" name="search-input" placeholder="SEARCH">
       </form>
       <section class="search-recommendations search-space">
         <div class="flex-container search-by-brand-control">

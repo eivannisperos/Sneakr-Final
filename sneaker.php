@@ -115,6 +115,7 @@
 
   <script>
     $(document).ready(function() {
+      var carouselPanels = 6;
       var isFavoriteShoe = <?= json_encode($favoriteShoe); ?>;
       var userLoggedIn = <?= json_encode($userLoggedIn) ?>;
       //capitalize the paragrpahs
@@ -150,7 +151,7 @@
 
       //iterate through images
       //then build image sections
-      for (i = 1; i < 6; i++) {
+      for (i = 1; i < carouselPanels; i++) {
         $(".img-carousel").append(
           addCarouselImg(
             buildImageLink('<?= $snkrImageLink; ?>', i)

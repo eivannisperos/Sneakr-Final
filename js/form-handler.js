@@ -105,63 +105,14 @@ $(document).ready(function() {
     //prevents click anchors to run to a new URL, which is their default behaviours
   });
 
-  // TODO: let the system add to the URL
-  /* start a new GitKraken Branch
-    1. let search page redirect to self
-    2. remove event.preventDefault so that the page reloads
-    3. have search-processing.php echo data instead to javascript
-    4. might have to remove the submit listener instead and replace it with AJAX call
-    5. have search-processing check for $_GET values (in the URL), so when it does exiest, transmit data
-  */
-  // $('.search').submit(function(event) {
-  //   //event.preventDefault();
-  //   var data = {
-  //     'search-input': $('input[name=search-input]').val()
-  //   }
-  //
-  //   $.ajax({
-  //     type : 'GET',
-  //     url : './data-processing/search-processing.php',
-  //     data : data,
-  //     dataType : 'json',
-  //     encode : true
-  //   }).done(function(data) {
-  //     $(".search-results").empty();
-  //
-  //     //if search query returns nothing, we return the message below
-  //     //we need to specify that the message below is a DOM with error-msg class
-  //     if (data.dataEmpty) {
-  //       var dataEmptyMsg = "SEARCH RESULT RETURNED NOTHING";
-  //       $(".search-results").append(buildErrorMessage(dataEmptyMsg));
-  //     } else {
-  //
-  //       //if there is data, iterate through them give them the propert names
-  //       //makes it easier to assign as variables
-  //       for (i = 0; i < data.length; i++) {
-  //         var name = data[i]['name'];
-  //         var id = data[i]['itemID'];
-  //         var colors = data[i]['colors'];
-  //         var img = data[i]['imgLink'];
-  //         var releaseDay = data[i]['releaseDay'];
-  //         var releaseMonth = data[i]['releaseMonth'];
-  //
-  //         //create search result queries and attach them to html DOM to be displayed
-  //         $(".search-results").append(buildSearchQuery(name, id, img, releaseMonth, releaseDay));
-  //       }
-  //     }
-  //   }).fail(function(data) {
-  //     //if function fails for whatever reason, place data here for debugging
-  //     //dont forget to update when launching
-  //     console.log(data);
-  //   });
-  // })
-
-  $.ajax({
+  $.get({
     type: 'get',
     url: './data-processing/search-processing.php',
     dataType: 'json',
     encode: true
   }).done(function(data) {
+    $(".search-brands").hide();
+    $(".close").hide();
     console.log(data);
     console.log(data.length); //when undefined, nothing is transmitting
     $(".search-results").empty();
@@ -169,14 +120,12 @@ $(document).ready(function() {
     //if search query returns nothing, we return the message below
     //we need to specify that the message below is a DOM with error-msg class
     if (data.dataEmpty) {
-      console.log("Data empty");
       var dataEmptyMsg = "SEARCH RESULT RETURNED NOTHING";
       $(".search-results").append(buildErrorMessage(dataEmptyMsg));
     } else {
       //close search-brands and close
-      console.log("data transmitting");
-      $(".search-brands").hide();
-      $(".close").hide();
+      // $(".search-brands").hide();
+      // $(".close").hide();
       //if there is data, iterate through them give them the propert names
       //makes it easier to assign as variables
       for (i = 0; i < data.length; i++) {
@@ -191,7 +140,11 @@ $(document).ready(function() {
       }
     }
   }).fail(function(data) {
+    $(".search-brands").hide();
+    $(".close").hide();
     console.log(data);
+    var dataRetreivalFailure = "DATA RETRIEVAL FAILED. CONTACT ADMINISTRATOR.";
+    $(".search-results").append(buildErrorMessage(dataRetreivalFailure));
   });
 
   //add or delete shoe favorite to user preferences

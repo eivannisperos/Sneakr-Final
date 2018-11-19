@@ -20,7 +20,6 @@
     </div>
     <section class="user-entry-grid-container">
 
-
       <!-- log in form -->
       <form class="entry-form log-in" action="data-processing/sign-in.php" method="post">
         <h1>SIGN IN</h1>
