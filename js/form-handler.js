@@ -105,16 +105,19 @@ $(document).ready(function() {
     //prevents click anchors to run to a new URL, which is their default behaviours
   });
 
+  //ajax function retrieve data coming from search-processing.php
+  //in the event the user searches something
   $.get({
     type: 'get',
     url: './data-processing/search-processing.php',
     dataType: 'json',
     encode: true
   }).done(function(data) {
+    //hide search by brand section
     $(".search-brands").hide();
     $(".close").hide();
-    console.log(data);
-    console.log(data.length); //when undefined, nothing is transmitting
+
+    //empty previous search queries
     $(".search-results").empty();
 
     //if search query returns nothing, we return the message below
@@ -140,9 +143,10 @@ $(document).ready(function() {
       }
     }
   }).fail(function(data) {
+    //hide search by brand section
     $(".search-brands").hide();
     $(".close").hide();
-    console.log(data);
+
     var dataRetreivalFailure = "DATA RETRIEVAL FAILED. CONTACT ADMINISTRATOR.";
     $(".search-results").append(buildErrorMessage(dataRetreivalFailure));
   });
