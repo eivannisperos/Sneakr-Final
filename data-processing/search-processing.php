@@ -46,7 +46,11 @@
 
     mysqli_close($connection);
     //unset global variable to make room for next one
+
+  } else {
+    $data["searchIdle"] = true;
   }
+
   unset($_SESSION["search-input"]);
   echo json_encode($data);
 

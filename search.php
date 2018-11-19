@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>user</title>
+    <title>SNEAKR : SEARCH</title>
     <link rel="stylesheet" href="css/master.css">
     <script src="js/jquery.js"></script>
     <script src="js/button-scripts.js"></script>

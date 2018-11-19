@@ -113,10 +113,7 @@ $(document).ready(function() {
     dataType: 'json',
     encode: true
   }).done(function(data) {
-    //hide search by brand section
-    $(".search-brands").hide();
-    $(".close").hide();
-
+    console.log(data);
     //empty previous search queries
     $(".search-results").empty();
 
@@ -125,10 +122,13 @@ $(document).ready(function() {
     if (data.dataEmpty) {
       var dataEmptyMsg = "SEARCH RESULT RETURNED NOTHING";
       $(".search-results").append(buildErrorMessage(dataEmptyMsg));
+    } else if (data.searchIdle) {
+      //show search-brands and close
+      showBrandSelection();
     } else {
       //close search-brands and close
-      // $(".search-brands").hide();
-      // $(".close").hide();
+      hideBrandSelection();
+
       //if there is data, iterate through them give them the propert names
       //makes it easier to assign as variables
       for (i = 0; i < data.length; i++) {
@@ -144,8 +144,7 @@ $(document).ready(function() {
     }
   }).fail(function(data) {
     //hide search by brand section
-    $(".search-brands").hide();
-    $(".close").hide();
+    hideBrandSelection();
 
     var dataRetreivalFailure = "DATA RETRIEVAL FAILED. CONTACT ADMINISTRATOR.";
     $(".search-results").append(buildErrorMessage(dataRetreivalFailure));
@@ -211,5 +210,15 @@ $(document).ready(function() {
 
     errorMsg.text(msg);
     return errorMsg;
+  }
+
+  function showBrandSelection() {
+    $(".search-brands").show();
+    $(".close").show();
+  }
+
+  function hideBrandSelection() {
+    $(".search-brands").hide();
+    $(".close").hide();
   }
 });
