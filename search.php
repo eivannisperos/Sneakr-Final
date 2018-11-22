@@ -8,6 +8,7 @@
     <script src="js/jquery.js"></script>
     <script src="js/button-scripts.js"></script>
     <script src="js/form-handler.js"></script>
+    <!-- <script src="js/load-brand.js"></script> -->
   </head>
   <body>
     <?php

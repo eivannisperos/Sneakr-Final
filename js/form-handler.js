@@ -157,14 +157,45 @@ $(document).ready(function() {
     dataType: 'json',
     encode: true
   }).done(function(data) {
-    console.log(data);
+    //retrieve brand name and the reference
+    //then we display this data via a tags
     for (i = 0; i < data.length; i++) {
-      var brandName = data[i].toUpperCase();
-      $(".search-brands").append(buildBrandLink(brandName));
+      var brandName = data[i]["brandName"].toUpperCase();
+      var dbRef = data[i]["dbRef"];
+      $(".search-brands").append(buildBrandLink(brandName, dbRef));
     }
   }).fail(function(data) {
     console.log(data);
   });
+
+  //when brand links aare clicked,
+  //retrieve shoes
+  $(document).on("click", "a.brand-link", function(event) {
+    var prepareBrandSearch = {
+      dbRef: $(this).data("dbRef").dbRef
+    }
+
+    //send the dbRef to search-by-brand php
+    $.ajax({
+      type: 'post',
+      url: './data-processing/search-by-brand.php',
+      data: prepareBrandSearch,
+      dataType: 'json',
+      encode: true
+    }).done(function(data, status) {
+      console.log(data);
+      $(".search-results").empty();
+      for (i = 0; i < data.length; i++) {
+        var name = data[i]['name'];
+        var id = data[i]['itemID'];
+        var img = data[i]['imgLink'];
+        var releaseDay = data[i]['releaseDay'];
+        var releaseMonth = data[i]['releaseMonth'];
+        //create search result queries and attach them to html DOM to be displayed
+        $(".search-results").append(buildSearchQuery(name, id, img, releaseMonth, releaseDay));
+      }
+    });
+  })
 
   //add or delete shoe favorite to user preferences
   $('.btn-set-favorite').click(function() {
@@ -238,10 +269,14 @@ $(document).ready(function() {
     $(".close").hide();
   }
 
-  function buildBrandLink(brandName) {
-    var brandLink = $("<a/>", {});
+  function buildBrandLink(brandName, dbRef) {
+    //we set the class name of the link "brand-link"
+    var brandLink = $("<a/>", {
+      class: "brand-link",
+    });
 
     brandLink.text(brandName);
+    brandLink.data("dbRef", {dbRef: dbRef}); //each link will be unique using a hidden data attribute
     return brandLink;
   }
 });
