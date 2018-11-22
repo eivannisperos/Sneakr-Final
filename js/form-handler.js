@@ -150,22 +150,6 @@ $(document).ready(function() {
     $(".search-results").append(buildErrorMessage(dataRetreivalFailure));
   });
 
-  //get brands
-  $.get({
-    type: 'get',
-    url: './data-processing/retrieve-brand.php',
-    dataType: 'json',
-    encode: true
-  }).done(function(data) {
-    console.log(data);
-    for (i = 0; i < data.length; i++) {
-      var brandName = data[i].toUpperCase();
-      $(".search-brands").append(buildBrandLink(brandName));
-    }
-  }).fail(function(data) {
-    console.log(data);
-  });
-
   //add or delete shoe favorite to user preferences
   $('.btn-set-favorite').click(function() {
     var sneakerInfo = {
@@ -236,12 +220,5 @@ $(document).ready(function() {
   function hideBrandSelection() {
     $(".search-brands").hide();
     $(".close").hide();
-  }
-
-  function buildBrandLink(brandName) {
-    var brandLink = $("<a/>", {});
-
-    brandLink.text(brandName);
-    return brandLink;
   }
 });
