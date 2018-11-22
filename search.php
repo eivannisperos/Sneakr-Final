@@ -33,15 +33,19 @@
           <img class="close-search-brands close img-button" src="assets/icons/cancel-music.png"></a>
         </div>
         <div class="flex-container search-brands">
+          <!-- first, we need to load the available brands in the database
+          we can do this by doing a search queries of all available brands
+          then we create the links based on the -->
+
           <!-- added div so that the underline does not extend all the way of the flex container -->
-          <a href="#">NIKE</a>
+          <!-- <a href="#">NIKE</a>
           <a href="#">ADIDAS</a>
           <a href="#">COMME DES GARCON</a>
           <a href="#">ASICS</a>
           <a href="#">NEW BALANCE</a>
           <a href="#">REEBOK</a>
           <a href="#">SAUCONY</a>
-          <a href="#">COMMON PROJECTS</a>
+          <a href="#">COMMON PROJECTS</a> -->
         </div>
 
         <!-- where the results show, currently it is flex container -->

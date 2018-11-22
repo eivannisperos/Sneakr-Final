@@ -120,7 +120,7 @@
       var userLoggedIn = <?= json_encode($userLoggedIn) ?>;
       //capitalize the paragrpahs
       var snkrDesc = "<?= $snkrDescription ?>";
-      $(".snkr-desc").html(snkrDesc.toUpperCase());
+      $(".snkr-desc").html(snkrDesc.toUpperCase()); //capitalize 
 
       //if the favorite button is clicked
       $('.btn-set-favorite').click(function() {

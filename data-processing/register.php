@@ -55,8 +55,6 @@
     $password = cleanInput($_POST['password-register']);
     $confirmPassword = cleanInput($_POST['password-confirm-register']);
 
-
-
     $query = "INSERT INTO users (username, email, pass) VALUES('$username', '$email', '$password')";
     $result = mysqli_query($connection, $query);
 

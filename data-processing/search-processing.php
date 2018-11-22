@@ -4,7 +4,7 @@
   session_start();
 
   $data = array();
-
+  
   if (isset($_SESSION["search-input"])) {
     $searchQuery = $_SESSION["search-input"];
     $query = "SELECT name, itemID, colors, releaseMonth, releaseDay, releaseYear, imgLink FROM shoes WHERE name LIKE '%$searchQuery%'";
@@ -82,4 +82,5 @@
       return 12;
     }
   }
+
   ?>
